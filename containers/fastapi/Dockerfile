@@ -6,3 +6,5 @@ WORKDIR /application
 RUN pip install --upgrade pip && pip install poetry
 COPY application/pyproject.toml ./
 RUN poetry install
+COPY ./containers/fastapi/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh

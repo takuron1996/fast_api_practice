@@ -1,6 +1,24 @@
 version: '3.9'
 
 services:
+  db:
+    container_name: db
+    build:
+      context: .
+      dockerfile: containers/postgres/Dockerfile
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U "${POSTGRES_USER:-postgres}" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    networks:
+      - fastapi_practice_db
   app:
     container_name: fastapi
     build:
@@ -10,6 +28,15 @@ services:
       - ./application:/application
     ports:
       - "8000:8000"
-    command: poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "/usr/local/bin/entrypoint.sh"
     env_file:
       - .env
+    networks:
+      - fastapi_practice_db
+volumes:
+  db_data:
+networks:
+  fastapi_practice_db:

@@ -35,3 +35,5 @@ docs:
 mypy:
 	$(POETRY_RUN) mypy --install-types --non-interactive
 
+migration:
+	$(POETRY_RUN) alembic revision --autogenerate
