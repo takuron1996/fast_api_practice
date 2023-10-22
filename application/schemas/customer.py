@@ -1,6 +1,5 @@
 """顧客関連のスキーマ用モジュール."""
 
-
 from pydantic import BaseModel, Field
 
 from validators import NotEmptyStr
@@ -36,3 +35,35 @@ class CustomerResponse(BaseModel):
         description="顧客名",
         example="Snorlax"
     )
+
+class LoginCustomerModel(BaseModel):
+    """ログインAPI用のモデル."""
+    id: NotEmptyStr = Field(
+        ...,
+        title="ID",
+        description="ID",
+        example="01HCW7AF8YTZEPGC9CFKPFNY5H"
+    )
+    password: NotEmptyStr = Field(
+        ...,
+        title="パスワード",
+        description="パスワード",
+        example="password"
+    )
+
+class LoginCustomerRespones(BaseModel):
+    """ログインAPI用のレスポンス."""
+    access_token: str = Field(
+        title="アクセストークン",
+        description="アクセストークン",
+        example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMUhDVzdBRjhZVFpFUEdDOUNGS1BGTlk1SCIsImV4cCI6MTY5Nzk2OTc0OX0.XFlWBi9rYzBAWYVHojGt3EGHwTTpqRxqxLYGqmuL1Pw"
+    )
+    token_type: str = Field(
+        title="トークンタイプ",
+        description="トークンタイプ",
+        example= "bearer",
+        default="bearer"
+    )
+
+
+

@@ -31,7 +31,6 @@ update:
 docs:
 	@$(POETRY_RUN) pdoc practice -o $(DOCS) -d google
 
-
 mypy:
 	$(POETRY_RUN) mypy --install-types --non-interactive
 

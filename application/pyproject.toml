@@ -13,6 +13,9 @@ asyncpg = "^0.28.0"
 alembic = "^1.12.0"
 ulid-py = "^1.1.0"
 bcrypt = "^4.0.1"
+passlib = { version = "^1.7.4", extras = ["bcrypt"] }
+python-multipart = "^0.0.6"
+python-jose = { version = "^3.3.0", extras = ["cryptography"] }
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"

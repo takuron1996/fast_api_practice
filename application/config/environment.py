@@ -17,7 +17,7 @@ class VariableSettings(BaseSettings):
     """CSRFCookieを設定するときに使用されるドメイン"""
 
 class PostgresSettings(BaseSettings):
-    """Postgres絡みの設定クラス."""
+    """Postgres関連の設定クラス."""
 
     POSTGRES_NAME: str
     """PostgreSQLのデータベース名"""
@@ -30,9 +30,26 @@ class PostgresSettings(BaseSettings):
     POSTGRES_PORT: int
     """PostgreSQLのポート番号"""
 
+class JWTSettings(BaseSettings):
+    """JWT関連の設定クラス."""
+    JWT_SECRET_KEY: str
+    """シークレットキー
+
+    下記コマンドで生成可能
+    $ openssl rand -hex 32
+    """
+
+    JWT_ALGORITHM: str = "HS256"
+    """JWTトークンの署名に使用するアルゴリズム"""
+
+    JWT_ACCESS_TOKEN_EXPIRE_MINUTES:int = 30
+    """トークンの有効期限(分)"""
 
 settings = VariableSettings()
 """環境変数"""
 
 postgres_settings = PostgresSettings()
-"""postgres絡みの環境変数"""
+"""postgres関連の環境変数"""
+
+jwt_settings = JWTSettings()
+"""JWT関連の環境変数"""
