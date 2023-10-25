@@ -29,7 +29,7 @@ pytest-env = "^1.0.1"
 ruff = "^0.0.291"
 pdoc = "^14.1.0"
 mypy = "^1.5.1"
-
+black = "^23.10.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -103,7 +103,7 @@ exclude = [
   "venv",
 ]
 
-line-length = 80
+# line-length = 80
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
@@ -116,3 +116,24 @@ convention = "google"
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["ALL"]
+
+[tool.black]
+line-length = 80
+include = '\.py$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''

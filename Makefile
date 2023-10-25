@@ -19,6 +19,7 @@ down:
 	docker-compose down
 
 check:
+	@$(POETRY_RUN) black .
 	-@$(POETRY_RUN) ruff --fix --show-source --output-format text -o $(LINT_RESULT) .
 	@less $(SOURCE_DIR)/$(LINT_RESULT)
 

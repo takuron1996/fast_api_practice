@@ -13,9 +13,11 @@ from schemas.customer import CustomerModel
 
 api_key_scheme = APIKeyHeader(name="Authorization")
 
+
 async def get_current_customer(
-        api_key: str = Depends(api_key_scheme),
-        async_session: AsyncSession = Depends(get_async_session)):
+    api_key: str = Depends(api_key_scheme),
+    async_session: AsyncSession = Depends(get_async_session),
+):
     """ログインしている顧客を取得."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -32,7 +34,8 @@ async def get_current_customer(
         payload = jwt.decode(
             token,
             jwt_settings.JWT_SECRET_KEY,
-            algorithms=jwt_settings.JWT_ALGORITHM)
+            algorithms=jwt_settings.JWT_ALGORITHM,
+        )
         customer_id = payload.get("sub")
         if customer_id is None:
             raise credentials_exception
@@ -40,7 +43,8 @@ async def get_current_customer(
         raise credentials_exception
 
     result = await async_session.execute(
-        select(Customer).where(Customer.id == customer_id))
+        select(Customer).where(Customer.id == customer_id)
+    )
     customer = result.scalar_one_or_none()
     if customer is None:
         raise credentials_exception
@@ -48,10 +52,10 @@ async def get_current_customer(
 
 
 async def create_customer(
-        async_session: AsyncSession,customer_model: CustomerModel
-    ) -> Customer:
+    async_session: AsyncSession, customer_model: CustomerModel
+) -> Customer:
     """顧客を生成."""
-    customer = Customer(name = customer_model.name)
+    customer = Customer(name=customer_model.name)
     customer.set_password(customer_model.password)
     async_session.add(customer)
     await async_session.commit()

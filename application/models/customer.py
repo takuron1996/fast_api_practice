@@ -7,6 +7,7 @@ from models.base import Base, PasswordMixin
 
 class Customer(Base, PasswordMixin):
     """顧客テーブルのORM."""
+
     __tablename__ = "customer"
 
     name: Mapped[str] = mapped_column(comment="顧客の名前")

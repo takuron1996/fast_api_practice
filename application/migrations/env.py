@@ -23,6 +23,7 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
+
 def import_migration_module(module):
     """マイグレーションに含めたいモジュールをimport."""
     for file_name in (p.name for p in Path(module).iterdir() if p.is_file()):
@@ -30,6 +31,7 @@ def import_migration_module(module):
             continue
         file_name = file_name.replace(".py", "")
         import_module(f"{module}.{file_name}")
+
 
 import_migration_module("models")
 
@@ -84,7 +86,6 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
-
 
 
 if context.is_offline_mode():
